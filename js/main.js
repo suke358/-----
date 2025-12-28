@@ -100,5 +100,39 @@ document.getElementById('searchInput').oninput = (e) => {
 };
 document.querySelector('.close').onclick = () => document.getElementById('modal').style.display = 'none';
 
-// 最初に「食事」を読み込む
-switchCategory('食事');
+
+// 今日の日付から「月」を取得（例：12月なら 12）
+const currentMonth = new Date().getMonth() + 1;
+
+// 季節情報をスプレッドシートから取得して表示
+async function loadSeasonalInfo() {
+    // 【重要】「季節情報」タブのCSV URLをここに貼ってください
+    const SEASON_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTTaLwPw_Umxz-kntpaLlE8-YJOefutrW2a1B-alKxA77zjQPjWUj8KZZ4PGG89HKssBCO7tlRe9S72/pub?gid=2040409405&single=true&output=csv';
+
+    try {
+        const res = await fetch(SEASON_URL);
+        const text = await res.text();
+        const rows = text.trim().split('\n').map(row => row.split(','));
+        const dataRows = rows.slice(1);
+
+        // スプレッドシートのA列（月）が今の月と一致する行をすべて探す
+        const currentMonthData = dataRows.filter(r => parseInt(r[0]) === currentMonth);
+
+        if (currentMonthData.length > 0) {
+            // 見つかった行のB列（旬）とC列（イベント）をそれぞれつなげる
+            const foodList = currentMonthData.map(r => r[1]).filter(v => v).join(' / ');
+            const eventList = currentMonthData.map(r => r[2]).filter(v => v).join(' / ');
+
+            // 画面に表示
+            if(document.getElementById('display-month')) document.getElementById('display-month').textContent = currentMonth;
+            if(document.getElementById('display-month-event')) document.getElementById('display-month-event').textContent = currentMonth;
+            if(document.getElementById('seasonal-food')) document.getElementById('seasonal-food').textContent = foodList || "情報なし";
+            if(document.getElementById('seasonal-event')) document.getElementById('seasonal-event').textContent = eventList || "情報なし";
+        }
+    } catch (err) {
+        console.error('季節情報の読み込み失敗:', err);
+    }
+}
+
+// 起動時に実行
+loadSeasonalInfo();

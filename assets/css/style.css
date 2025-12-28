@@ -14,6 +14,7 @@ h1 {
 }
 
 /* 季節情報のカードスタイル */
+/* 季節情報のカードスタイル */
 .seasonal-container { 
     display: flex; 
     flex-wrap: wrap; 
@@ -31,25 +32,50 @@ h1 {
     border-left: 6px solid #ff9800; 
 }
 
+/* イベントカードを青くする */
+/* イベントカードを青くする */
 .seasonal-card.event { 
-    border-left-color: #2196f3; 
+    border-left: none;
+    background: #2196f3; 
+    color: white;
 }
 
 .seasonal-card h3 { 
     margin: 0 0 8px 0; 
     font-size: 0.9em; 
     color: #7f8c8d; 
-    text-transform: uppercase; 
+}
+
+.event h3 { color: rgba(255,255,255,0.8); }
+
+/* ★スクロールを出すための設定 */
+.seasonal-inner-scroll {
+    max-height: 120px;
+    overflow-y: auto;
+    padding-right: 5px;
 }
 
 .seasonal-content { 
     font-size: 1.1em; 
     font-weight: bold; 
-    line-height: 1.4; 
+    line-height: 1.6; 
 }
 
 #seasonal-food { color: #e67e22; }
-#seasonal-event { color: #2980b9; }
+#seasonal-event { color: #ffffff; }
+
+.next-month-box {
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px dashed #ccc;
+    font-size: 0.85em;
+    color: #666;
+}
+
+.event .next-month-box {
+    color: #eee;
+    border-top: 1px dashed rgba(255,255,255,0.4);
+}
 
 /* 検索窓とフィルター */
 input[type="text"] { 

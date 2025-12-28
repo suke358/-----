@@ -143,41 +143,42 @@ input[type="text"]:focus {
     margin-left: auto; 
 }
 
-/* テーブル（一覧表） */
+/* ==========================================
+   テーブル（一覧表）: 横幅いっぱい・文字サイズ調整版
+   ========================================== */
 .table-wrapper { 
+    width: 100%;       /* ★横幅を100%に広げる */
     overflow-x: auto; 
     background: white; 
     border-radius: 12px; 
     box-shadow: 0 4px 6px rgba(0,0,0,0.05); 
+    margin-top: 10px;  /* 上との間隔を調整 */
 }
 
 table { 
-    width: 100%; 
+    width: 100%;       /* ★テーブル自体も横いっぱいに使う */
     border-collapse: collapse; 
-    min-width: 600px; 
+    min-width: 800px;  /* スマホで横スクロールさせるための最低幅を少し広げる */
 }
 
 th, td { 
-    padding: 15px; 
+    padding: 18px 15px; /* ★上下の余白を増やして、1行を大きく見せる */
     text-align: left; 
     border-bottom: 1px solid #eee; 
+    font-size: 15px;    /* ★文字サイズを少し大きく（14px→15px） */
 }
 
 th { 
     background: #fcfcfc; 
     color: #7f8c8d; 
     font-weight: bold; 
-    font-size: 13px; 
+    font-size: 14px;    /* 見出しも少し大きく */
 }
 
-tr:hover { 
-    background: #f9f9f9; 
-    cursor: pointer; 
-}
-
-.stars { 
-    color: #f1c40f; 
-    font-size: 1.1em; 
+/* お店名の列を少し強調する */
+td:first-child {
+    font-weight: bold;
+    color: #2c3e50;
 }
 
 /* モーダル（詳細ポップアップ） */

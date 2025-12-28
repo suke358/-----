@@ -91,13 +91,28 @@ function renderTable(data) {
 }
 
 // 検索・閉じる処理
+// 検索バーの動作を改良（キーワードに近いものを優先）
 document.getElementById('searchInput').oninput = (e) => {
-    const query = e.target.value.toLowerCase();
-    renderTable(allData.filter(r => 
-        (r['店名'] || r['お店名'] || "").toLowerCase().includes(query) || 
-        (r['カテゴリ'] || "").toLowerCase().includes(query)
-    ));
+    const query = e.target.value.toLowerCase().trim(); // 空白を消して小文字にする
+    
+    if (query === "") {
+        renderTable(allData); // 空っぽの時は全部出す
+        return;
+    }
+
+    const filtered = allData.filter(r => {
+        const name = (r['店名'] || r['お店名'] || "").toLowerCase();
+        const category = (r['カテゴリ'] || "").toLowerCase();
+        const location = (r['場所'] || "").toLowerCase();
+
+        // 【改良ポイント】店名が検索ワードで「始まる」か、カテゴリが「完全一致」するか
+        // これにより、より意図に近いものが優先的に残ります
+        return name.includes(query) || category === query || location.includes(query);
+    });
+
+    renderTable(filtered);
 };
+
 document.querySelector('.close').onclick = () => document.getElementById('modal').style.display = 'none';
 
 

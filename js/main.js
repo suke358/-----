@@ -139,16 +139,22 @@ async function loadSeasonalInfo() {
         // スプレッドシートのA列（月）が今の月と一致する行をすべて探す
         const currentMonthData = dataRows.filter(r => parseInt(r[0]) === currentMonth);
 
+        // --- ここから下を丸ごと入れ替え ---
         if (currentMonthData.length > 0) {
-            // 見つかった行のB列（旬）とC列（イベント）をそれぞれつなげる
-            const foodList = currentMonthData.map(r => r[1]).filter(v => v).join(' / ');
-            const eventList = currentMonthData.map(r => r[2]).filter(v => v).join(' / ');
+            // 改行（<br>）でつなげて、先頭に「・」をつける
+            const foodList = currentMonthData.map(r => r[1] ? `・${r[1]}` : "").filter(v => v).join('<br>');
+            const eventList = currentMonthData.map(r => r[2] ? `・${r[2]}` : "").filter(v => v).join('<br>');
 
-            // 画面に表示
+            // 反映させる（.innerHTML を使うことで改行が有効になります）
+            if(document.getElementById('seasonal-food')) document.getElementById('seasonal-food').innerHTML = foodList || "情報なし";
+            if(document.getElementById('seasonal-event')) document.getElementById('seasonal-event').innerHTML = eventList || "情報なし";
+            
             if(document.getElementById('display-month')) document.getElementById('display-month').textContent = currentMonth;
             if(document.getElementById('display-month-event')) document.getElementById('display-month-event').textContent = currentMonth;
-            if(document.getElementById('seasonal-food')) document.getElementById('seasonal-food').textContent = foodList || "情報なし";
-            if(document.getElementById('seasonal-event')) document.getElementById('seasonal-event').textContent = eventList || "情報なし";
+        } else {
+            // データが見つからなかった時の表示
+            if(document.getElementById('seasonal-food')) document.getElementById('seasonal-food').textContent = "今月の情報はありません";
+            if(document.getElementById('seasonal-event')) document.getElementById('seasonal-event').textContent = "今月の予定はありません";
         }
     } catch (err) {
         console.error('季節情報の読み込み失敗:', err);
@@ -157,6 +163,4 @@ async function loadSeasonalInfo() {
 
 // 起動時に実行
 loadSeasonalInfo();
-
-// ★ここを追加！ 最初に「食事」のデータを読み込む命令
 switchCategory('食事');

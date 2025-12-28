@@ -5,7 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>防府周辺 総合検索ポータル</title>
     <link rel="stylesheet" href="assets/css/style.css">
-</head>
+    <style>
+        .seasonal-content {
+            max-height: 80px;    /* 3〜4行分くらいの高さに固定 */
+            overflow-y: auto;    /* 縦に溢れたらスクロールバーを出す */
+            display: block;      /* スクロールを有効にする */
+            line-height: 1.6;    /* 行間を広げて読みやすく */
+            font-size: 0.9em;    /* 文字を少しだけ小さくして情報を詰め込む */
+            padding-right: 5px;
+            scrollbar-width: thin; /* Firefox用 */
+        }
+        /* Chrome/Safari用のスクロールバーデザイン */
+        .seasonal-content::-webkit-scrollbar { width: 4px; }
+        .seasonal-content::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.5); border-radius: 10px; }
+    </style>
+    </head>
 <body>
     <h1>防府周辺 総合検索ポータル</h1>
 

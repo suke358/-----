@@ -168,6 +168,15 @@ th, td {
     font-size: 15px;    /* ★文字サイズを少し大きく（14px→15px） */
 }
 
+/* ★ここから追記：備考欄（一番右の列）のための設定 */
+th:last-child, td:last-child {
+    min-width: 150px;     /* 備考が窮屈にならないよう少し幅を確保 */
+    word-break: break-all; /* 長い文章が入っても枠を突き抜けないようにする */
+    color: #666;          /* 備考は少しサブ情報っぽく色を落ち着かせる */
+    font-size: 13px;      /* 備考だけ少し文字を小さくして情報を詰めやすくする */
+}
+
+
 th { 
     background: #fcfcfc; 
     color: #7f8c8d; 

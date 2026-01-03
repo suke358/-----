@@ -17,7 +17,13 @@ async function initApp() {
         const promises = Object.entries(URLS).map(async ([category, url]) => {
             const res = await fetch(url);
             const text = await res.text();
-            const rows = text.trim().split('\n').map(row => row.split(','));
+            // 修正後: 文字列内のカンマを無視して正しく分割する命令
+        const rows = text.trim().split('\n').map(row => {
+        // 正規表現を使って、ダブルクォーテーションで囲まれていないカンマのみで分割
+        const regex = /,(?=(?:(?:[^"]*"){2})*[^"]*$)/;
+    return row.split(regex).map(cell => cell.replace(/^"(.*)"$/, '$1').trim());
+});
+
             const headers = rows[0].map(h => h.trim());
             return rows.slice(1).map(row => {
                 let obj = { '元カテゴリ': category };

@@ -161,51 +161,45 @@ table {
     min-width: 800px;  /* スマホで横スクロールさせるための最低幅を少し広げる */
 }
 
-/* --- テーブルの列幅調整（ここから差し替え） --- */
-/* style.css */
+/* ==========================================
+   テーブル（一覧表）: 備考欄の折り返し対応版
+   ========================================== */
 
-/* テーブル全体のスクロールを確実にする */
+/* 1. 外枠：スマホで横スクロールできるようにする */
 .table-wrapper {
     width: 100%;
     overflow-x: auto;
-    -webkit-overflow-scrolling: touch; /* スマホでスイスイ動くように */
+    -webkit-overflow-scrolling: touch; 
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
 }
 
+/* 2. テーブル本体：列が重ならないよう最低幅を確保 */
 table {
     width: 100%;
     border-collapse: collapse;
-    min-width: 900px; /* ★列が重ならないよう、全体の横幅を十分に確保 */
+    min-width: 900px; /* ★重要：これがあるから文字が重なりません */
 }
 
-/* 全般的なセルの設定 */
+/* 3. 全般的なセルの設定 */
 th, td { 
     padding: 15px 10px;
     text-align: left; 
     border-bottom: 1px solid #eee; 
     font-size: 15px;
-    /* 他の列は一行で表示 */
-    white-space: nowrap; 
+    white-space: nowrap; /* 基本は1行で表示 */
 }
 
-/* 💡 修正の肝：一番右の列（備考）だけを「改行あり・幅広」にする */
+/* 4. 備考欄（一番右の列）だけの設定：ここが最重要 */
 th:last-child, td:last-child {
-    min-width: 300px;      /* ★幅を300px以上に広げる */
-    white-space: normal;   /* ★ここで「改行」を許可する（これで途切れなくなります） */
-    word-break: break-all; /* 長い英単語があっても強制改行 */
-    line-height: 1.5;      /* 文章が複数行になっても読みやすく */
-    color: #555;           /* 少し色を和らげる */
+    min-width: 300px;           /* ★幅を広めに確保 */
+    white-space: normal !important; /* ★強制的に改行を許可 */
+    word-break: break-all;      /* 長い単語も枠内で折り返す */
+    line-height: 1.6;           /* 文章を読みやすく */
+    color: #666; 
+    font-size: 14px;            /* 他より少しだけ小さくしてスッキリ */
 }
-
-/* 💡 一番右の列（備考）だけを広く、折り返し可能にする設定 */
-th:last-child, td:last-child {
-    width: 250px;         /* 幅をしっかり確保 */
-    min-width: 200px;     /* スマホでもこれ以上狭くならないように */
-    white-space: normal;  /* 文字数が多い時は自動で改行する */
-    color: #666;          /* 文字色を少し柔らかく */
-    font-size: 13px;      /* 情報を詰めやすいよう少し小さく */
-    line-height: 1.4;     /* 改行した時に読みやすく */
-}
-/* --- ここまで差し替え --- */
 
 th { 
     background: #fcfcfc; 
@@ -298,4 +292,12 @@ td:first-child {
     padding: 50px; 
     font-size: 18px; 
     color: #95a5a6; 
+}
+
+/* 備考欄の文字を隠さず、すべて表示する */
+td:last-child {
+    white-space: normal !important; 
+    height: auto !important;      /* 高さを自動にする */
+    min-width: 300px;
+    word-break: break-all;
 }

@@ -301,3 +301,14 @@ td:last-child {
     min-width: 300px;
     word-break: break-all;
 }
+
+/* style.css の一番下に追加 */
+td {
+    white-space: normal !important; /* 改行を許可 */
+    line-height: 1.4;              /* 行間を広げて読みやすく */
+    vertical-align: middle;        /* 文字を上下中央に */
+}
+
+td:last-child {
+    min-width: 200px;              /* 備考欄の幅をしっかり確保 */
+}
